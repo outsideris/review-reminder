@@ -1,6 +1,5 @@
 # review-reminder
 
-[![Build Status](https://travis-ci.org/probot/review-reminder.svg?branch=master)](https://travis-ci.org/probot/review-reminder)
 <!-- Note: Update this badge with whatever CI service you would like; at Probot, we generally default to Travis. -->
 
 > A GitHub App built with [Probot](https://github.com/probot/probot) that 
