@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "author": "Outsider <outsideris@gmail.com> (https://github.com/outsideris/review-reminder)",
-  "license": "ISC",
+  "license": "MIT",
   "repository": "https://github.com/outsideris/review-reminder.git",
   "homepage": "https://github.com/outsideris/review-reminder",
   "bugs": "https://github.com/outsideris/review-reminder/issues",

@@ -22,4 +22,4 @@ For more, check out the [Contributing Guide](CONTRIBUTING.md).
 
 ## License
 
-[ISC](LICENSE) © 2018 Outsider <outsideris@gmail.com> (https://github.com/outsideris/review-reminder)
+[MIT](LICENSE) © 2018 Outsider <outsideris@gmail.com> (https://github.com/outsideris/review-reminder)
