@@ -1,10 +1,8 @@
-module.exports = app => {
-  // Your code here
-  app.log('Yay, the app was loaded!')
+const createScheduler = require('probot-scheduler');
 
-  // For more information on building apps:
-  // https://probot.github.io/docs/
+module.exports = robot => {
+  scheduler = createScheduler(robot);
 
-  // To get your app running against GitHub, see:
-  // https://probot.github.io/docs/development/
+  robot.on('schedule.repository', context => {
+  });
 }
