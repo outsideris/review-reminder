@@ -1,6 +1,6 @@
 # review-reminder
 
-[![Build Status](https://travis-ci.com/outsideris/review-reminder.svg?branch=master)](https://travis-ci.com/outsideris/review-reminder)
+[![Build Status 2](https://travis-ci.com/outsideris/review-reminder.svg?branch=master)](https://travis-ci.com/outsideris/review-reminder)
 
 > A GitHub App built with [Probot](https://github.com/probot/probot) that 
 
