@@ -54,4 +54,51 @@ describe('review', () => {
       expect(github.search.issues).toHaveBeenCalled()
     })
   })
+
+  describe('getReviews()', () => {
+    let robot
+    let github
+    const configFile = ''
+
+    beforeEach(() => {
+      robot = createRobot()
+
+      github = {
+        repos: {
+          getContent: jest.fn().mockReturnValue({
+            data: { content: Buffer.from(configFile).toString('base64') }
+          })
+        },
+        pullRequests: {
+          getReviews: jest.fn().mockResolvedValue({
+            data: [
+              { user: { login: 'reviewer1', avatar_url: 'avartar' },
+                state: 'CHANGES_REQUESTED' },
+              { user: { login: 'reviewer2', avatar_url: 'avartar' },
+                state: 'COMMENTED' },
+              { user: { login: 'reviewer2', avatar_url: 'avartar' },
+                state: 'APPROVED' }
+            ]
+          })
+        }
+      }
+
+      // Mock out GitHub client
+      robot.auth = () => Promise.resolve(github)
+    })
+
+    test('should remain latest review status by users', async () => {
+      const pullRequest = new PullRequest(github, 'outsideris', 'review-reminder')
+      pullRequest.toReview = [{
+        url: 'https://github.com/outsideris/review-reminder/pull/2',
+        number: 2,
+        title: 'test pr 2',
+        author: 'outsideris',
+        authorAvatar: 'https://avatars1.githubusercontent.com/u/390146?v=4'
+      }]
+      await pullRequest.getReviews()
+
+      expect(pullRequest.toReview[0].reviews).toHaveLength(2)
+    })
+  })
 })
