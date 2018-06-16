@@ -94,9 +94,56 @@ describe('review', () => {
         number: 2,
         title: 'test pr 2',
         author: 'outsideris',
-        authorAvatar: 'https://avatars1.githubusercontent.com/u/390146?v=4'
+        authorAvatar: 'https://avatars1.githubusercontent.com/u/390146?v=4',
+        reviews: []
       }]
       await pullRequest.getReviews()
+
+      expect(pullRequest.toReview[0].reviews).toHaveLength(2)
+    })
+  })
+
+  describe('getReviewers()', () => {
+    let robot
+    let github
+    const configFile = ''
+
+    beforeEach(() => {
+      robot = createRobot()
+
+      github = {
+        repos: {
+          getContent: jest.fn().mockReturnValue({
+            data: { content: Buffer.from(configFile).toString('base64') }
+          })
+        },
+        pullRequests: {
+          getReviewRequests: jest.fn().mockResolvedValue({
+            data: {
+              users: [
+                { login: 'reviewer1', avatar_url: 'avatar1' },
+                { login: 'reviewer2', avatar_url: 'avatar2' }
+              ]
+            }
+          })
+        }
+      }
+
+      // Mock out GitHub client
+      robot.auth = () => Promise.resolve(github)
+    })
+
+    test('should add reviews who waiting to review', async () => {
+      const pullRequest = new PullRequest(github, 'outsideris', 'review-reminder')
+      pullRequest.toReview = [{
+        url: 'https://github.com/outsideris/review-reminder/pull/2',
+        number: 2,
+        title: 'test pr 2',
+        author: 'outsideris',
+        authorAvatar: 'https://avatars1.githubusercontent.com/u/390146?v=4',
+        reviews: []
+      }]
+      await pullRequest.getReviewers()
 
       expect(pullRequest.toReview[0].reviews).toHaveLength(2)
     })
