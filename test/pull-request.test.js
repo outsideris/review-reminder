@@ -62,7 +62,9 @@ describe('review', () => {
 
     beforeEach(() => {
       robot = createRobot()
+    })
 
+    test('should remain latest review status by users', async () => {
       github = {
         repos: {
           getContent: jest.fn().mockReturnValue({
@@ -82,12 +84,8 @@ describe('review', () => {
           })
         }
       }
-
-      // Mock out GitHub client
       robot.auth = () => Promise.resolve(github)
-    })
 
-    test('should remain latest review status by users', async () => {
       const pullRequest = new PullRequest(github, 'outsideris', 'review-reminder')
       pullRequest.toReview = [{
         url: 'https://github.com/outsideris/review-reminder/pull/2',
@@ -100,6 +98,35 @@ describe('review', () => {
       await pullRequest.getReviews()
 
       expect(pullRequest.toReview[0].reviews).toHaveLength(2)
+    })
+
+    test('should remain 11latest review status by users', async () => {
+      github = {
+        repos: {
+          getContent: jest.fn().mockReturnValue({
+            data: { content: Buffer.from(configFile).toString('base64') }
+          })
+        },
+        pullRequests: {
+          getReviews: jest.fn().mockResolvedValue({
+            data: []
+          })
+        }
+      }
+      robot.auth = () => Promise.resolve(github)
+
+      const pullRequest = new PullRequest(github, 'outsideris', 'review-reminder')
+      pullRequest.toReview = [{
+        url: 'https://github.com/outsideris/review-reminder/pull/2',
+        number: 2,
+        title: 'test pr 2',
+        author: 'outsideris',
+        authorAvatar: 'https://avatars1.githubusercontent.com/u/390146?v=4',
+        reviews: []
+      }]
+      await pullRequest.getReviews()
+
+      expect(pullRequest.toReview[0].reviews).toHaveLength(0)
     })
   })
 
