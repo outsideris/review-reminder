@@ -21,14 +21,14 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
-    "probot": "^6.0.0",
+    "probot": "^7.0.0",
     "probot-scheduler": "^1.2.0",
     "randomcolor": "^0.5.3"
   },
   "devDependencies": {
     "jest": "^23.2.0",
     "nodemon": "^1.17.2",
-    "smee-client": "^1.0.1",
+    "smee-client": "^1.0.2",
     "standard": "^11.0.1"
   },
   "engines": {
