@@ -1,15 +1,15 @@
-const { createRobot } = require('probot')
+const { Application } = require('probot')
 
 const PullRequest = require('../lib/pull-request')
 
 describe('review', () => {
   describe('opended()', () => {
-    let robot
+    let app
     let github
     const configFile = ''
 
     beforeEach(() => {
-      robot = createRobot()
+      app = new Application()
 
       github = {
         repos: {
@@ -44,7 +44,7 @@ describe('review', () => {
       }
 
       // Mock out GitHub client
-      robot.auth = () => Promise.resolve(github)
+      app.auth = () => Promise.resolve(github)
     })
 
     test('should retrive opened PRs to review', async () => {
@@ -56,12 +56,12 @@ describe('review', () => {
   })
 
   describe('getReviews()', () => {
-    let robot
+    let app
     let github
     const configFile = ''
 
     beforeEach(() => {
-      robot = createRobot()
+      app = new Application()
     })
 
     test('should remain latest review status by users', async () => {
@@ -84,7 +84,7 @@ describe('review', () => {
           })
         }
       }
-      robot.auth = () => Promise.resolve(github)
+      app.auth = () => Promise.resolve(github)
 
       const pullRequest = new PullRequest(github, 'outsideris', 'review-reminder')
       pullRequest.toReview = [{
@@ -113,7 +113,7 @@ describe('review', () => {
           })
         }
       }
-      robot.auth = () => Promise.resolve(github)
+      app.auth = () => Promise.resolve(github)
 
       const pullRequest = new PullRequest(github, 'outsideris', 'review-reminder')
       pullRequest.toReview = [{
@@ -131,12 +131,12 @@ describe('review', () => {
   })
 
   describe('getReviewers()', () => {
-    let robot
+    let app
     let github
     const configFile = ''
 
     beforeEach(() => {
-      robot = createRobot()
+      app = new Application()
 
       github = {
         repos: {
@@ -157,7 +157,7 @@ describe('review', () => {
       }
 
       // Mock out GitHub client
-      robot.auth = () => Promise.resolve(github)
+      app.auth = () => Promise.resolve(github)
     })
 
     test('should add reviews who waiting to review', async () => {
